@@ -1,57 +1,51 @@
 // 12S25014 - LAURA KASIH MUTIARA
 
-#include <stdio.h> // Diperlukan untuk fungsi input/output seperti printf dan scanf
-#include <limits.h> // Diperlukan untuk INT_MAX dan INT_MIN (opsional, bisa inisialisasi dengan nilai pertama)
+#include <stdio.h> // Diperlukan untuk fungsi input/output seperti scanf dan printf
 
 int main() {
     int n;          // Variabel untuk menyimpan jumlah baris masukan berikutnya
     int num;        // Variabel untuk menyimpan setiap bilangan bulat yang dimasukkan
-    int min_val;    // Variabel untuk menyimpan nilai terkecil
-    int max_val;    // Variabel untuk menyimpan nilai terbesar
+    int min_val;    // Variabel untuk menyimpan nilai terkecil dari semua angka
+    int max_val;    // Variabel untuk menyimpan nilai terbesar dari semua angka
     int i;          // Variabel counter untuk loop
 
-    // --- Bagian 1: Membaca dan memvalidasi nilai 'n' ---
-    printf("Masukkan jumlah baris masukan berikutnya (n): ");
-    // Memastikan input 'n' adalah bilangan bulat dan positif
+    int first_num_read = 0;   // Flag untuk inisialisasi min_val dan max_val dengan angka pertama
+
+    // --- Bagian 1: Membaca dan memvalidasi nilai 'n' (Prompt interaktif dihapus) ---
+    // Program akan menunggu input 'n' tanpa menampilkan prompt ke user.
+    // Validasi tetap ada untuk memastikan 'n' adalah bilangan bulat positif.
     while (scanf("%d", &n) != 1 || n <= 0) {
-        printf("Input tidak valid. n harus bilangan bulat positif. Silakan masukkan lagi: ");
-        // Membersihkan buffer input jika ada karakter yang tidak sesuai
-        while (getchar() != '\n'); 
+        // Pesan error validasi juga dihapus agar tidak muncul di output autograding.
+        while (getchar() != '\n'); // Membersihkan buffer input jika ada karakter yang tidak sesuai
     }
 
-    // Inisialisasi min_val dan max_val dengan nilai pertama yang valid
-    // Ini lebih baik daripada menginisialisasi dengan INT_MAX/INT_MIN karena menghindari masalah jika n=0 (meskipun sudah divalidasi n > 0)
-    // atau jika semua angka positif/negatif.
-
-    // --- Bagian 2: Membaca 'n' baris masukan dan mencari min/max ---
-    printf("Masukkan %d bilangan bulat antara -100 dan 100:\n", n);
+    // --- Bagian 2: Membaca 'n' baris masukan dan mencari min/max (Prompt interaktif dihapus) ---
     for (i = 0; i < n; i++) {
-        printf("Angka ke-%d: ", i + 1);
-        // Memastikan input 'num' adalah bilangan bulat dan berada dalam rentang -100 hingga 100
-        while (scanf("%d", &num) != 1 || num < -100 || num > 100) {
-            printf("Input tidak valid. Angka harus bilangan bulat antara -100 dan 100. Silakan masukkan lagi: ");
-            // Membersihkan buffer input jika ada karakter yang tidak sesuai
-            while (getchar() != '\n');
+        int current_input_val; // Variabel sementara untuk input yang belum divalidasi
+        // Program akan menunggu input angka tanpa menampilkan prompt ke user.
+        // Validasi tetap ada untuk memastikan angka dalam rentang yang ditentukan.
+        while (scanf("%d", &current_input_val) != 1 || current_input_val < -100 || current_input_val > 100) {
+            // Pesan error validasi juga dihapus.
+            while (getchar() != '\n'); // Membersihkan buffer input jika ada karakter yang tidak sesuai
         }
+        num = current_input_val; // Gunakan angka yang sudah divalidasi
 
-        // Untuk angka pertama yang valid, inisialisasi min_val dan max_val
-        if (i == 0) {
+        // Logika pencarian nilai terkecil dan terbesar
+        if (!first_num_read) {
             min_val = num;
             max_val = num;
+            first_num_read = 1;
         } else {
-            // Membandingkan dengan min_val saat ini
             if (num < min_val) {
                 min_val = num;
             }
-            // Membandingkan dengan max_val saat ini
             if (num > max_val) {
                 max_val = num;
             }
         }
     }
 
-    // --- Bagian 3: Menampilkan hasil keluaran ---
-    printf("\nBerikut adalah keluaran yang dihasilkan:\n");
+    // --- Bagian 3: Menampilkan hasil keluaran (Hanya hasil akhir, tanpa prompt pembuka atau rata-rata) ---
     printf("%d\n", min_val); // Menampilkan nilai terkecil
     printf("%d\n", max_val); // Menampilkan nilai terbesar
 
